@@ -6,11 +6,13 @@
 package com.toko.bunga.dao;
 
 import com.toko.bunga.model.TokoBunga;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
+@Transactional
 public class TokoBungaImpl implements TokoBungaDao {
     @Autowired
     private SessionFactory sessionFactory;
@@ -27,8 +30,9 @@ public class TokoBungaImpl implements TokoBungaDao {
 //    }
     
     @Override
-    public void save(TokoBunga tokobunga) {
-        sessionFactory.getCurrentSession().save(tokobunga);
+    public String save(TokoBunga tokobunga) {
+      Serializable res = sessionFactory.getCurrentSession().save(tokobunga);
+      return String.valueOf(res);
 //        Session session = sessionFactory.openSession();
 //        try{
 //            session.beginTransaction();
